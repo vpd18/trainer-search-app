@@ -19,7 +19,7 @@ const LINKEDIN_BLUE = "#0A66C2";
 import vedPhoto from "./assets/ved.jpg";
 
 /* ---------- Reusable Header ---------- */
-function LinkedInHeader({ title = "LinkedIn" }) {
+function LinkedInHeader({ title = "Profile"}){
   return (
     <View style={styles.header}>
       <Text style={styles.headerTitle}>{title}</Text>
