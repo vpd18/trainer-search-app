@@ -6,11 +6,41 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Linking,
+  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Contact() {
+  // 🔹 your real details
+  const email = "vpdviking18@gmail.com";
+  const phone = "+919234896122"; // change this to your real number if you want calling
+  const linkedinUrl = "https://www.linkedin.com"; // put your real LinkedIn when ready
+  const githubUrl = "https://github.com/vpd18";
+  const leetcodeUrl = "https://leetcode.com/u/PNAo9C3Q1k/";
+
+  const openLink = async (url) => {
+    try {
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert("Error", "Cannot open this link: " + url);
+      }
+    } catch (err) {
+      Alert.alert("Error", "Something went wrong while opening the link.");
+    }
+  };
+
+  const handleEmail = () => {
+    openLink(`mailto:${email}`);
+  };
+
+  const handlePhone = () => {
+    openLink(`tel:${phone}`);
+  };
+
   return (
     <ScrollView style={styles.container}>
       {/* Top gradient header */}
@@ -23,7 +53,7 @@ export default function Contact() {
             <Text style={styles.greeting}>Let’s Connect 👋</Text>
             <Text style={styles.name}>Ved Pranav Das</Text>
             <Text style={styles.title}>
-              Aspiring Developer • React Native • Android
+              Aspiring Developer • React Native • Java
             </Text>
           </View>
 
@@ -47,12 +77,12 @@ export default function Contact() {
         </Text>
 
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.primaryBtn}>
+          <TouchableOpacity style={styles.primaryBtn} onPress={handleEmail}>
             <Ionicons name="mail-outline" size={18} />
             <Text style={styles.primaryBtnText}>Email me</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.secondaryBtn}>
+          <TouchableOpacity style={styles.secondaryBtn} onPress={handlePhone}>
             <Feather name="phone" size={18} />
             <Text style={styles.secondaryBtnText}>Call</Text>
           </TouchableOpacity>
@@ -63,44 +93,50 @@ export default function Contact() {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Contact details</Text>
 
-        <View style={styles.infoRow}>
+        <TouchableOpacity style={styles.infoRow} onPress={handleEmail}>
           <Ionicons name="mail-outline" size={20} />
           <View style={styles.infoTextWrapper}>
             <Text style={styles.infoLabel}>Email</Text>
-            <Text style={styles.infoValue}>vpdviking18@gmail.com</Text>
+            <Text style={styles.infoValue}>{email}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.infoRow}>
+        <TouchableOpacity style={styles.infoRow} onPress={handlePhone}>
           <Feather name="phone" size={20} />
           <View style={styles.infoTextWrapper}>
             <Text style={styles.infoLabel}>Phone</Text>
-            <Text style={styles.infoValue}>+91 98765 43210</Text>
+            <Text style={styles.infoValue}>{phone}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
 
         <View style={styles.infoRow}>
           <Ionicons name="location-outline" size={20} />
           <View style={styles.infoTextWrapper}>
             <Text style={styles.infoLabel}>Location</Text>
-            <Text style={styles.infoValue}>City, India (Open to relocate)</Text>
+            <Text style={styles.infoValue}>India (Open to remote)</Text>
           </View>
         </View>
       </View>
 
-      {/* Card: Social links like LinkedIn */}
+      {/* Card: Social links */}
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Find me online</Text>
 
-        <TouchableOpacity style={styles.socialRow}>
+        <TouchableOpacity
+          style={styles.socialRow}
+          onPress={() => openLink(linkedinUrl)}
+        >
           <Ionicons name="logo-linkedin" size={22} />
           <View style={styles.infoTextWrapper}>
             <Text style={styles.infoLabel}>LinkedIn</Text>
-            <Text style={styles.infoValue}>linkedin.com/in/yourusername</Text>
+            <Text style={styles.infoValue}>Add your LinkedIn here</Text>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.socialRow}>
+        <TouchableOpacity
+          style={styles.socialRow}
+          onPress={() => openLink(githubUrl)}
+        >
           <Feather name="github" size={22} />
           <View style={styles.infoTextWrapper}>
             <Text style={styles.infoLabel}>GitHub</Text>
@@ -108,11 +144,16 @@ export default function Contact() {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.socialRow}>
+        <TouchableOpacity
+          style={styles.socialRow}
+          onPress={() => openLink(leetcodeUrl)}
+        >
           <MaterialCommunityIcons name="code-tags" size={22} />
           <View style={styles.infoTextWrapper}>
             <Text style={styles.infoLabel}>LeetCode</Text>
-            <Text style={styles.infoValue}>https://leetcode.com/u/PNAo9C3Q1k/</Text>
+            <Text style={styles.infoValue}>
+              leetcode.com/u/PNAo9C3Q1k/
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -121,11 +162,15 @@ export default function Contact() {
       <View style={[styles.card, styles.lastCard]}>
         <Text style={styles.cardTitle}>Why contact me?</Text>
         <Text style={styles.cardSubtitle}>
-          I’m currently learning React Native and Android development.  
-          I love building UIs and I’m actively working on projects (check the Projects tab 👀).
+          I’m currently learning React Native and Android development.{"\n"}
+          I love building UIs and I’m actively working on projects (check the
+          Projects tab 👀).
         </Text>
 
-        <TouchableOpacity style={styles.primaryWideBtn}>
+        <TouchableOpacity
+          style={styles.primaryWideBtn}
+          onPress={handleEmail}
+        >
           <Text style={styles.primaryWideBtnText}>Send a quick message</Text>
         </TouchableOpacity>
       </View>
@@ -245,6 +290,7 @@ const styles = StyleSheet.create({
   },
   infoTextWrapper: {
     marginLeft: 10,
+    flex: 1,
   },
   infoLabel: {
     color: "#7D86A5",
